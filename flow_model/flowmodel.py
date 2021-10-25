@@ -28,8 +28,8 @@ class FlowModel():
         continue
       type = None
       iname = ''
-      params = None
-      aliases = None
+      params = {}
+      aliases = {}
       if 'exec' in step:
         type = FlowItemType.EXEC
         iname = step.get('exec')
@@ -69,8 +69,12 @@ class FlowModel():
     return
  
   @property
-  def items(self) -> List[Dict]:
+  def items(self) -> List[FlowItemModel]:
     return self._items
+
+  @property
+  def loaded(self) -> bool:
+    return len(self._items) > 0
 
 
   def get_flow_item(self, key: str) -> Dict:
