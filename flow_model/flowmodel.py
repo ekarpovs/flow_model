@@ -1,7 +1,4 @@
-'''
-'''
-import json
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 from .flowitemtype import FlowItemType
 from .flowitemmodel import FlowItemModel
@@ -10,21 +7,49 @@ BEGIN_FLOW_MARKER = {"stm": "glbstm.begin"}
 END_FLOW_MARKER = {"stm": "glbstm.end"}
 
 class FlowModel():
-  def __init__(self, path: str) -> None:
+  '''
+  Flow model
+  '''
+
+  def __init__(self, path: str, name: str, worksheet: List[Dict]) -> None:
       self._path: str = path
-      self._name: str = ''
-      self._info: str = ''
-      self._items: List[FlowItemModel] = []
+      self._name: str = name
+      (self._info, self._items) = self._parse(worksheet)
       return
       
+  @property
+  def path(self) -> str:
+    return self._path
 
-  def _parse(self, name: str, flow: List[Dict]) -> None:
-    self.name = name
+  @property
+  def name(self) -> str:
+    return self._name
+
+  @property
+  def info(self) -> str:
+    return self._info
+
+  @property
+  def items(self) -> List[FlowItemModel]:
+    return self._items
+
+  @property
+  def loaded(self) -> bool:
+    return len(self._items) > 0
+
+
+  def get_flow_item(self, key: str) -> Dict:
+    return self._items.get(key, None)
+
+  @staticmethod
+  def _parse(worksheet: List[Dict]) -> Tuple[str, List[FlowItemModel]]:
+    info = ''
+    items: List[FlowItemModel] = []
     item = FlowItemModel(FlowItemType.STM_BEGIN, 'glbstm.begin')
-    self._items.append(item)
-    for step in flow:
+    items.append(item)
+    for step in worksheet:
       if 'info' in step:
-        self.info = step.get('info')
+        info = step.get('info')
         continue
       type = None
       iname = ''
@@ -41,51 +66,7 @@ class FlowModel():
       if 'aliases' in step:
         aliases = step.get('aliases')
       item = FlowItemModel(type, iname, params, aliases)
-      self._items.append(item)
+      items.append(item)
     item = FlowItemModel(FlowItemType.STM_END, 'glbstm.end')
-    self._items.append(item)
-    return
-
-  @property
-  def path(self) -> str:
-    return self._path
-
-  @property
-  def name(self) -> str:
-    return self._name
-
-  @name.setter
-  def name(self, name: str) ->None:
-    self._name = name
-    return
-
-  @property
-  def info(self) -> str:
-    return self._info
-
-  @info.setter
-  def info(self, info: str) ->None:
-    self._info = info
-    return
- 
-  @property
-  def items(self) -> List[FlowItemModel]:
-    return self._items
-
-  @property
-  def loaded(self) -> bool:
-    return len(self._items) > 0
-
-
-  def get_flow_item(self, key: str) -> Dict:
-    return self._items.get(key, None)
-
-
-  def load_worksheet(self, name: str) -> None:
-    # load the worksheet from the path 
-    ffn = f'{self.path}/{name}.json'
-    with open(ffn, 'rt') as ws:
-      worksheet = json.load(ws)
-      self._parse(name, worksheet)
-    return
-
+    items.append(item)
+    return (info, items)
