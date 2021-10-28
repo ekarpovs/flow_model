@@ -37,10 +37,12 @@ class FlowModel():
   def loaded(self) -> bool:
     return len(self._items) > 0
 
-
-  def get_flow_item(self, key: str) -> Dict:
-    return self._items.get(key, None)
-
+  def get_item(self, name) -> FlowItemModel:
+    for item in self.items:
+      if item.name == name:
+        return item
+    return None
+    
   @staticmethod
   def _parse(worksheet: List[Dict]) -> Tuple[str, List[FlowItemModel]]:
     info = ''
