@@ -11,20 +11,10 @@ class FlowModel():
   Flow model
   '''
 
-  def __init__(self, path: str, name: str, worksheet: List[Dict]) -> None:
-      self._path: str = path
-      self._name: str = name
+  def __init__(self, worksheet: List[Dict]) -> None:
       (self._info, self._items) = self._parse(worksheet)
       return
       
-  @property
-  def path(self) -> str:
-    return self._path
-
-  @property
-  def name(self) -> str:
-    return self._name
-
   @property
   def info(self) -> str:
     return self._info
@@ -37,12 +27,20 @@ class FlowModel():
   def loaded(self) -> bool:
     return len(self._items) > 0
 
-  def get_item(self, name) -> FlowItemModel:
-    for item in self.items:
-      if item.name == name:
-        return item
-    return None
-    
+  def get_item(self, idx: int) -> FlowItemModel:
+    return self.items[idx]
+
+  def set_item(self, idx: int, item: FlowItemModel) -> None:
+    return  self.items.insert(idx, item)
+
+  def get_item_params(self, idx: int) -> Dict:
+    return self.items[idx].params
+
+  def set_item_params(self, idx: int, params) -> None:
+    self.items[idx].params = params
+    return
+
+
   @staticmethod
   def _parse(worksheet: List[Dict]) -> Tuple[str, List[FlowItemModel]]:
     info = ''

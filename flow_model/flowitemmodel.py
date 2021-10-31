@@ -1,22 +1,22 @@
 '''
 '''
 
-from typing import Dict
+from typing import Dict, List
 from .flowitemtype import FlowItemType
 
 class FlowItemModel():
-  def __init__(self, type: FlowItemType, name: str, params: Dict={}, aliases: Dict={}) -> None:
+  def __init__(self, type: FlowItemType, name: str, params_ws: Dict={}, aliases: Dict={}) -> None:
       self._type = type
       self._name = name
       # Params are defined in ws
-      self._params_ws: Dict = params
-      # Paramsfrom the item definition
-      self._params_def: Dict = None
+      self._params_ws: Dict = params_ws
+      # Params from the item definition
+      self._params_def: List[Dict] = None
       # Actual, working params:
       # Values may are:
       # 1. start - from ws definition
       # 2. from update
-      self._params: Dict = params
+      self._params: Dict = params_ws
       self._aliases = aliases
 
   @property
@@ -32,11 +32,11 @@ class FlowItemModel():
     return self._params_ws
 
   @property
-  def params_def(self) -> Dict:
+  def params_def(self) -> List[Dict]:
     return self._params_def
 
   @params_def.setter
-  def params_def(self, params) -> None:
+  def params_def(self, params: List[Dict]) -> None:
     self._params_def = params
 
   @property
