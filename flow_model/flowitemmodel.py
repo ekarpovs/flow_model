@@ -1,7 +1,7 @@
 '''
 '''
 
-from typing import Dict
+from typing import Dict, List
 from .flowitemtype import FlowItemType
 
 class FlowItemModel():
