@@ -33,6 +33,10 @@ class FlowModel():
   def set_item(self, idx: int, item: FlowItemModel) -> None:
     return  self.items.insert(idx, item)
 
+  def remove_item(self, idx) -> None:
+    self.items.pop(idx)
+    return
+
   def get_item_params(self, idx: int) -> Dict:
     return self.items[idx].params
 
