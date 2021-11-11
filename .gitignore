@@ -1,3 +1,4 @@
 .vscode
+doc
 flow_model/__pycache__
 flow_model.egg-info
