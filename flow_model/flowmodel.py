@@ -9,9 +9,14 @@ class FlowModel():
   '''
 
   def __init__(self, worksheet: List[Dict]) -> None:
+      self._ws = worksheet
       (self._info, self._items) = self._parse(worksheet)
       return
-      
+  
+  @property
+  def worksheet(self) -> List[Dict]:
+    return self._ws
+
   @property
   def info(self) -> str:
     return self._info
