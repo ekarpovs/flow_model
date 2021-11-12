@@ -33,7 +33,9 @@ class FlowModel():
     return self.items[idx]
 
   def set_item(self, idx: int, item: FlowItemModel) -> None:
-    return  self.items.insert(idx, item)
+    self._ws.insert(idx+1, {"exec":item.name})
+    self.items.insert(idx, item)
+    return
 
   def remove_item(self, idx) -> None:
     self.items.pop(idx)
