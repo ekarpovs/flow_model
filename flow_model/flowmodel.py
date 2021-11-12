@@ -38,6 +38,7 @@ class FlowModel():
     return
 
   def remove_item(self, idx) -> None:
+    self._ws.pop(idx+1)
     self.items.pop(idx)
     return
 
