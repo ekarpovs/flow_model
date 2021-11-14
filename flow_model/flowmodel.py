@@ -9,13 +9,13 @@ class FlowModel():
   '''
 
   def __init__(self, worksheet: List[Dict]) -> None:
-      self._ws = worksheet
-      (self._info, self._items) = self._parse(worksheet)
-      return
+    self._worksheet = worksheet
+    (self._info, self._items) = self._parse(worksheet)
+    return
   
   @property
   def worksheet(self) -> List[Dict]:
-    return self._ws
+    return self._worksheet
 
   @property
   def info(self) -> str:
@@ -33,12 +33,10 @@ class FlowModel():
     return self.items[idx]
 
   def set_item(self, idx: int, item: FlowItemModel) -> None:
-    self._ws.insert(idx+1, {"exec":item.name})
     self.items.insert(idx, item)
     return
 
   def remove_item(self, idx) -> None:
-    self._ws.pop(idx+1)
     self.items.pop(idx)
     return
 
