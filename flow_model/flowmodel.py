@@ -9,14 +9,12 @@ class FlowModel():
   '''
 
   def __init__(self, worksheet: List[Dict]) -> None:
-    self._worksheet = worksheet
-    (self._info, self._items) = self._parse(worksheet)
+    # self._worksheet = worksheet
+    self._info: str = ''
+    self._items: List[FlowItemModel] = []   
+    self._build(worksheet)
     return
   
-  @property
-  def worksheet(self) -> List[Dict]:
-    return self._worksheet
-
   @property
   def info(self) -> str:
     return self._info
@@ -48,13 +46,10 @@ class FlowModel():
     return
 
 
-  @staticmethod
-  def _parse(worksheet: List[Dict]) -> Tuple[str, List[FlowItemModel]]:
-    info = ''
-    items: List[FlowItemModel] = []
+  def _build(self, worksheet: List[Dict]) -> None:
     for step in worksheet:
       if 'info' in step:
-        info = step.get('info')
+        self._info = step.get('info')
         continue
       type = None
       iname = ''
@@ -67,5 +62,19 @@ class FlowModel():
       if 'aliases' in step:
         aliases = step.get('aliases')
       item = FlowItemModel(type, iname, params, aliases)
-      items.append(item)
-    return (info, items)
+      self.items.append(item)
+    return
+
+  def get_as_ws(self) -> List[Dict]:
+    ws = [{"info": self.info}]   
+    for item in self.items:
+      iname = item.name
+      ws_item = {"exec": iname}
+      iparams = item.params
+      if len(iparams)> 0:
+        ws_item["params"] = iparams
+      ialiases = item.aliases
+      if len(ialiases)> 0:
+        ws_item["aliases"] = ialiases
+      ws.append(ws_item)
+    return ws
