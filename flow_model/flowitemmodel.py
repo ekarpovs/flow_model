@@ -1,6 +1,7 @@
 '''
 '''
 
+import copy
 from typing import Dict, List
 from .flowitemtype import FlowItemType
 
@@ -16,7 +17,7 @@ class FlowItemModel():
       # Values may are:
       # 1. start - from ws definition
       # 2. from update
-      self._params: Dict = params_ws
+      self._params: Dict = copy.deepcopy(self._params_ws)
       # input/output references from the item definition
       self._inrefs_def: List[str] = None
       self._outrefs_def: List[str] = None
