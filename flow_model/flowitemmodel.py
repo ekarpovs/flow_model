@@ -6,7 +6,7 @@ from typing import Dict, List
 from .flowitemtype import FlowItemType
 
 class FlowItemModel():
-  def __init__(self, type: FlowItemType, name: str, params_ws: Dict={}, aliases: Dict={}) -> None:
+  def __init__(self, type: FlowItemType, name: str, params_ws: Dict={}, links: Dict={}) -> None:
       self._type = type
       self._name = name
       # Params are defined in ws
@@ -19,9 +19,9 @@ class FlowItemModel():
       # 2. from update
       self._params: Dict = copy.deepcopy(self._params_ws)
       # input/output references from the item definition
-      self._inrefs_def: List[str] = None
-      self._outrefs_def: List[str] = None
-      self._aliases: Dict[str, str] = aliases
+      # self._inrefs_def: List[str] = None
+      # self._outrefs_def: List[str] = None
+      self._links: Dict[str, str] = links
 
   @property
   def itype(self) -> FlowItemType:
@@ -52,24 +52,6 @@ class FlowItemModel():
     self._params = params
 
   @property
-  def inrefs_def(self) -> List[str]:
-    return self._inrefs_def
-
-  @inrefs_def.setter
-  def inrefs_def(self, inrefs: List[str]) -> None:
-    self._inrefs_def = inrefs
-    return
-
-  @property
-  def outrefs_def(self) -> List[str]:
-    return self._outrefs_def
-
-  @outrefs_def.setter
-  def outrefs_def(self, outrefs: List[str]) -> None:
-    self._outrefs_def = outrefs
-    return
-
-  @property
-  def aliases(self) -> Dict[str, str]:
-    return self._aliases
+  def links(self) -> Dict[str, str]:
+    return self._links
   

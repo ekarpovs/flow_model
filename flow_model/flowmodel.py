@@ -54,14 +54,14 @@ class FlowModel():
       type = None
       iname = ''
       params = {}
-      aliases = {}
+      links = {}
       type = FlowItemType.EXEC
       iname = step.get('exec')
       if 'params' in step:
         params = step.get('params')
-      if 'aliases' in step:
-        aliases = step.get('aliases')
-      item = FlowItemModel(type, iname, params, aliases)
+      if 'links' in step:
+        links = step.get('links')
+      item = FlowItemModel(type, iname, params, links)
       self.items.append(item)
     return
 
@@ -73,8 +73,8 @@ class FlowModel():
       iparams = item.params
       if len(iparams)> 0:
         ws_item["params"] = iparams
-      ialiases = item.aliases
-      if len(ialiases)> 0:
-        ws_item["aliases"] = ialiases
+      ilinks = item.links
+      if len(ilinks)> 0:
+        ws_item["links"] = ilinks
       ws.append(ws_item)
     return ws
