@@ -6,9 +6,10 @@ from typing import Dict, List
 from .flowitemtype import FlowItemType
 
 class FlowItemModel():
-  def __init__(self, type: FlowItemType, name: str, params_ws: Dict={}, links: Dict={}) -> None:
+  def __init__(self, type: FlowItemType, name: str, title: str, params_ws: Dict={}, links: Dict={}) -> None:
       self._type = type
       self._name = name
+      self._title = title
       # Params are defined in ws
       self._params_ws: Dict = params_ws
       # Params from the item definition
@@ -31,6 +32,15 @@ class FlowItemModel():
   def name(self) -> str:
     return self._name
 
+  @property
+  def title(self) -> str:
+    return self._title
+
+  @title.setter
+  def title(self, title) -> None:
+    self._title = title
+    return 
+    
   @property
   def params_ws(self) -> Dict:
     return self._params_ws

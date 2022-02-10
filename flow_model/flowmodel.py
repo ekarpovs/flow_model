@@ -19,6 +19,11 @@ class FlowModel():
   def info(self) -> str:
     return self._info
 
+  @info.setter
+  def info(self, info) -> None:
+    self._info = info
+    return
+
   @property
   def items(self) -> List[FlowItemModel]:
     return self._items
@@ -53,15 +58,17 @@ class FlowModel():
         continue
       type = None
       iname = ''
+      ititle = ''
       params = {}
       links = {}
       type = FlowItemType.EXEC
       iname = step.get('exec')
+      ititle = step.get('title', '')
       if 'params' in step:
         params = step.get('params')
       if 'links' in step:
         links = step.get('links')
-      item = FlowItemModel(type, iname, params, links)
+      item = FlowItemModel(type, iname, ititle, params, links)
       self.items.append(item)
     return
 
@@ -70,6 +77,8 @@ class FlowModel():
     for item in self.items:
       iname = item.name
       ws_item = {"exec": iname}
+      ititle = item.title
+      ws_item["title"] = ititle
       iparams = item.params
       if len(iparams)> 0:
         ws_item["params"] = iparams
