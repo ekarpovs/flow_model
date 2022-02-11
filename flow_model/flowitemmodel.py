@@ -6,7 +6,7 @@ from typing import Dict, List
 from .flowitemtype import FlowItemType
 
 class FlowItemModel():
-  def __init__(self, type: FlowItemType, name: str, title: str, params_ws: Dict={}, links: Dict={}) -> None:
+  def __init__(self, type: FlowItemType, name: str, title: str='', params_ws: Dict={}, links: Dict={}) -> None:
       self._type = type
       self._name = name
       self._title = title
