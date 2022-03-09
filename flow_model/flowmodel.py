@@ -35,6 +35,14 @@ class FlowModel():
   def get_item(self, idx: int) -> FlowItemModel:
     return self.items[idx]
 
+  def replace_item(self, idx: int, item: FlowItemModel) -> None:
+    try:
+      self.items.pop(idx)
+    except IndexError:
+      pass   
+    self.items.insert(idx, item)
+    return
+
   def set_item(self, idx: int, item: FlowItemModel) -> None:
     self.items.insert(idx, item)
     return
